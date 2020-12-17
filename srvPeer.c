@@ -34,11 +34,9 @@ int main(int argc, char* argv[])
     int listenfd, connfd;
     char read_buf[BUFFER_SIZE];
     char write_buf[BUFFER_SIZE];
-    char End_buf[BUFFER_SIZE];
+    char End_buf[BUFFER_SIZE] = "END\n";
     memset(read_buf, 0, sizeof(read_buf));
     memset(write_buf, 0, sizeof(write_buf));
-    memset(End_buf, 0, sizeof(End_buf));
-    snprintf(End_buf, sizeof(End_buf), "END\n");
 
     hint_backspace();
 
@@ -148,7 +146,6 @@ int main(int argc, char* argv[])
         if (fds[0].revents & POLLIN) {  //向对等方发送数据
             fgets(write_buf, BUFFER_SIZE-1, stdin);
             if (strcmp(write_buf, End_buf) == 0) {
-                printf("it is end\n");
                 printf("\033[1;35;35m****************************************\033[0m\n");
                 printf("\033[1;35;35m************你已经关闭了连接************\033[0m\n");
                 printf("\033[1;35;35m****************************************\033[0m\n");
